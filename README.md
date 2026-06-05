@@ -26,7 +26,7 @@ pha-tool score worksheet.csv --output scored.xlsx
 
 ## Worksheet columns
 
-The CSV and Excel interfaces use the following columns:
+The CSV interface uses the following columns:
 
 | Column | Description |
 | --- | --- |
@@ -42,7 +42,7 @@ The CSV and Excel interfaces use the following columns:
 | `due_date` | Optional due date. |
 | `status` | Recommendation status. Defaults to `open`. |
 
-When scoring a worksheet, PHA Tool appends `risk_score`, `risk_band`, and `priority` columns. Use an `.xlsx` output path to create a downloadable Excel workbook, or a `.csv` path for spreadsheet-friendly CSV output.
+When scoring a worksheet, PHA Tool appends `risk_score`, `risk_band`, and `priority` columns.
 
 ## Risk bands
 
@@ -57,7 +57,6 @@ The default matrix multiplies severity by likelihood and assigns bands:
 
 ```bash
 python -m pytest
-ruff check .
-PYTHONPATH=src python -m pha_tool template /tmp/worksheet.xlsx
-PYTHONPATH=src python -m pha_tool score docs/worksheet-example.csv --output /tmp/scored.xlsx
+python -m pha_tool template /tmp/worksheet.csv
+python -m pha_tool score /tmp/worksheet.csv --output /tmp/scored.csv
 ```
