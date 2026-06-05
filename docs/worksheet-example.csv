@@ -1,0 +1,3 @@
+node,deviation,cause,consequence,safeguards,severity,likelihood,recommendation,owner,due_date,status
+Reactor feed,No flow,Feed pump trip,Loss of cooling and off-spec batch,Low-flow alarm; operator response,4,3,Add automatic standby pump start,Operations,2026-09-30,open
+Reactor feed,High flow,Control valve failure,Overpressure downstream,Pressure relief valve; high-flow alarm,5,2,Verify relief sizing basis,Process Safety,2026-08-15,open
