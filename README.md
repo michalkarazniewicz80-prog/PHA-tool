@@ -19,7 +19,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e .
 pha-tool template worksheet.csv
+pha-tool template worksheet.xlsx
 pha-tool score worksheet.csv --output scored.csv
+pha-tool score worksheet.csv --output scored.xlsx
 ```
 
 ## Worksheet columns
