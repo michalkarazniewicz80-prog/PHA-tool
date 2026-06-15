@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PHA Tool</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --ink: #122033;
+      --muted: #516070;
+      --line: #c7d2e2;
+      --brand: #0f5aa6;
+      --brand-dark: #083f78;
+      --low: #dff6e6;
+      --medium: #fff1c2;
+      --high: #ffd6ba;
+      --critical: #ffd1d9;
+      --shadow: 0 16px 40px rgba(18, 32, 51, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #e8f2ff 0%, var(--bg) 42%, #fff 100%);
+      color: var(--ink);
+    }
+
+    header {
+      padding: 2rem clamp(1rem, 4vw, 3rem);
+      background: #0b335f;
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 { margin: 0 0 .35rem; font-size: clamp(2rem, 4vw, 3.6rem); }
+    header p { margin: 0; max-width: 78ch; color: #d9eaff; }
+
+    main { padding: clamp(1rem, 3vw, 2rem); display: grid; gap: 1.25rem; }
+
+    .toolbar, .panel {
+      background: rgba(255,255,255,.94);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .8rem;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    button, .file-button {
+      border: 0;
+      border-radius: 999px;
+      padding: .72rem 1rem;
+      font-weight: 750;
+      background: var(--brand);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(15,90,166,.18);
+    }
+
+    button.secondary, .file-button { background: #e7eef8; color: var(--brand-dark); }
+    button.danger { background: #a61f3d; }
+    button:hover, .file-button:hover { filter: brightness(.96); transform: translateY(-1px); }
+    input[type="file"] { display: none; }
+
+    .panel { padding: 1rem; overflow: hidden; }
+    .panel h2 { margin: 0 0 .75rem; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1300px; background: #fff; }
+    th, td { border-bottom: 1px solid var(--line); padding: .7rem; vertical-align: top; text-align: left; }
+    th { background: #edf4fc; color: #16375a; position: sticky; top: 73px; z-index: 3; }
+    tr:hover td { background: #fbfdff; }
+
+    input, textarea, select {
+      width: 100%;
+      min-width: 8.5rem;
+      border: 2px solid #a8b8cb;
+      border-radius: 10px;
+      padding: .62rem .7rem;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    textarea { min-height: 4.8rem; resize: vertical; }
+
+    select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #062b52 50%), linear-gradient(135deg, #062b52 50%, transparent 50%), linear-gradient(to right, #d6e2f1, #d6e2f1);
+      background-position: calc(100% - 18px) 50%, calc(100% - 11px) 50%, 100% 0;
+      background-size: 7px 7px, 7px 7px, 2.8rem 100%;
+      background-repeat: no-repeat;
+      padding-right: 3.35rem;
+      font-weight: 700;
+    }
+
+    input:focus, textarea:focus, select:focus { outline: 3px solid #9bc8ff; border-color: var(--brand); }
+
+    .score { font-weight: 850; text-transform: capitalize; border-radius: 999px; display: inline-block; padding: .35rem .7rem; }
+    .low { background: var(--low); color: #116329; }
+    .medium { background: var(--medium); color: #775500; }
+    .high { background: var(--high); color: #8a3600; }
+    .critical { background: var(--critical); color: #8d0f2a; }
+
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .8rem; }
+    .card { border: 1px solid var(--line); border-radius: 14px; padding: 1rem; background: #f9fbfe; }
+    .card strong { display: block; font-size: 1.8rem; }
+
+    .actions table { min-width: 900px; }
+    .empty { color: var(--muted); padding: 1rem; }
+    footer { color: var(--muted); padding: 0 clamp(1rem, 3vw, 2rem) 2rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PHA Tool</h1>
+    <p>Browser-only Process Hazard Analysis worksheet with automatic risk ranking, visible dropdown controls, CSV import/export, and an action tracker that rebuilds itself from recommendations.</p>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="Worksheet actions">
+      <button id="addRow">Add scenario</button>
+      <button id="addSample" class="secondary">Load sample</button>
+      <button id="exportCsv" class="secondary">Export scored CSV</button>
+      <label class="file-button" for="importCsv">Import CSV</label>
+      <input id="importCsv" type="file" accept=".csv,text/csv">
+      <button id="clearRows" class="danger">Clear worksheet</button>
+    </section>
+
+    <section class="panel">
+      <h2>Worksheet</h2>
+      <div class="summary" id="summary"></div>
+      <div class="table-wrap">
+        <table id="worksheetTable">
+          <thead>
+            <tr>
+              <th>Node</th><th>Deviation</th><th>Cause</th><th>Consequence</th><th>Safeguards</th>
+              <th>Severity</th><th>Likelihood</th><th>Risk</th><th>Recommendation</th><th>Owner</th><th>Due date</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel actions">
+      <h2>Action tracker <small>(auto-built from recommendations)</small></h2>
+      <div id="actions"></div>
+    </section>
+  </main>
+
+  <footer>
+    Safety note: this tool supports documentation and prioritization only. It does not replace qualified engineering judgment, site procedures, regulatory requirements, or formal process safety reviews.
+  </footer>
+
+  <script>
+    const fields = ["node", "deviation", "cause", "consequence", "safeguards", "severity", "likelihood", "recommendation", "owner", "due_date", "status"];
+    const state = { rows: JSON.parse(localStorage.getItem("phaRows") || "[]") };
+    const sampleRows = [{ node: "Reactor", deviation: "High temperature", cause: "Cooling failure", consequence: "Overpressure or runaway reaction", safeguards: "High temperature alarm; PSV", severity: 5, likelihood: 3, recommendation: "Evaluate independent high-temperature trip", owner: "Controls", due_date: "2026-12-31", status: "open" }];
+
+    function score(row) {
+      const severity = Number(row.severity || 1);
+      const likelihood = Number(row.likelihood || 1);
+      const risk_score = severity * likelihood;
+      const risk_band = risk_score >= 17 ? "critical" : risk_score >= 10 ? "high" : risk_score >= 5 ? "medium" : "low";
+      const priority = { critical: 1, high: 2, medium: 3, low: 4 }[risk_band];
+      return { risk_score, risk_band, priority };
+    }
+
+    function persist() { localStorage.setItem("phaRows", JSON.stringify(state.rows)); }
+
+    function setValue(index, field, value) {
+      state.rows[index][field] = ["severity", "likelihood"].includes(field) ? Number(value) : value;
+      persist();
+      if (["severity", "likelihood", "status"].includes(field)) {
+        render();
+      } else {
+        renderSummary();
+        renderActions();
+      }
+    }
+
+    function control(row, index, field) {
+      if (["severity", "likelihood"].includes(field)) {
+        return `<select aria-label="${field}" onchange="setValue(${index}, '${field}', this.value)">${[1,2,3,4,5].map(v => `<option value="${v}" ${Number(row[field]) === v ? "selected" : ""}>${v}</option>`).join("")}</select>`;
+      }
+      if (field === "status") {
+        return `<select aria-label="status" onchange="setValue(${index}, 'status', this.value)">${["open", "in progress", "closed", "deferred"].map(v => `<option value="${v}" ${row.status === v ? "selected" : ""}>${v}</option>`).join("")}</select>`;
+      }
+      const tag = ["cause", "consequence", "safeguards", "recommendation"].includes(field) ? "textarea" : "input";
+      const value = String(row[field] || "").replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
+      return tag === "textarea" ? `<textarea oninput="setValue(${index}, '${field}', this.value)">${value}</textarea>` : `<input value="${value}" oninput="setValue(${index}, '${field}', this.value)">`;
+    }
+
+    function render() {
+      const tbody = document.querySelector("#worksheetTable tbody");
+      tbody.innerHTML = state.rows.map((row, index) => {
+        const result = score(row);
+        return `<tr>${fields.slice(0, 7).map(field => `<td>${control(row, index, field)}</td>`).join("")}<td><span class="score ${result.risk_band}">${result.risk_score} ${result.risk_band}<br>Priority ${result.priority}</span></td>${fields.slice(7).map(field => `<td>${control(row, index, field)}</td>`).join("")}<td><button class="danger" onclick="removeRow(${index})">Remove</button></td></tr>`;
+      }).join("");
+      renderSummary();
+      renderActions();
+    }
+
+    function renderSummary() {
+      const counts = { total: state.rows.length, critical: 0, high: 0, medium: 0, low: 0, openActions: 0 };
+      state.rows.forEach(row => { const result = score(row); counts[result.risk_band]++; if (row.recommendation && row.status !== "closed") counts.openActions++; });
+      document.getElementById("summary").innerHTML = [`Scenarios:${counts.total}`, `Critical:${counts.critical}`, `High:${counts.high}`, `Medium:${counts.medium}`, `Low:${counts.low}`, `Open actions:${counts.openActions}`].map(item => { const [label, value] = item.split(":"); return `<div class="card"><span>${label}</span><strong>${value}</strong></div>`; }).join("");
+    }
+
+    function renderActions() {
+      const actions = state.rows.map((row, index) => ({ ...row, index, ...score(row) })).filter(row => row.recommendation && row.status !== "closed").sort((a, b) => a.priority - b.priority || String(a.due_date).localeCompare(String(b.due_date)));
+      document.getElementById("actions").innerHTML = actions.length ? `<div class="table-wrap"><table><thead><tr><th>Priority</th><th>Risk</th><th>Recommendation</th><th>Owner</th><th>Due</th><th>Status</th><th>Scenario</th></tr></thead><tbody>${actions.map(row => `<tr><td>${row.priority}</td><td><span class="score ${row.risk_band}">${row.risk_band}</span></td><td>${escapeHtml(row.recommendation)}</td><td>${escapeHtml(row.owner)}</td><td>${escapeHtml(row.due_date)}</td><td>${escapeHtml(row.status)}</td><td>${escapeHtml(row.node)} / ${escapeHtml(row.deviation)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="empty">No open recommendations yet. Add recommendation text to a worksheet row and the tracker will build automatically.</p>`;
+    }
+
+    function escapeHtml(value) { return String(value || "").replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;'); }
+    function addRow(row = {}) { state.rows.push({ node: "", deviation: "", cause: "", consequence: "", safeguards: "", severity: 1, likelihood: 1, recommendation: "", owner: "", due_date: "", status: "open", ...row }); persist(); render(); }
+    function removeRow(index) { state.rows.splice(index, 1); persist(); render(); }
+    function clearRows() { state.rows = []; persist(); render(); }
+
+    function toCsv(rows) {
+      const scoredFields = [...fields, "risk_score", "risk_band", "priority"];
+      const lines = [scoredFields.join(",")];
+      rows.forEach(row => { const result = score(row); lines.push(scoredFields.map(field => `"${String(({ ...row, ...result })[field] ?? "").replaceAll('"', '""')}"`).join(",")); });
+      return lines.join("\n");
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [], value = "", quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i], next = text[i + 1];
+        if (char === '"' && quoted && next === '"') { value += '"'; i++; }
+        else if (char === '"') quoted = !quoted;
+        else if (char === ',' && !quoted) { row.push(value); value = ""; }
+        else if ((char === '\n' || char === '\r') && !quoted) { if (char === '\r' && next === '\n') i++; row.push(value); rows.push(row); row = []; value = ""; }
+        else value += char;
+      }
+      if (value || row.length) { row.push(value); rows.push(row); }
+      const headers = rows.shift().map(h => h.trim());
+      return rows.filter(r => r.some(Boolean)).map(values => Object.fromEntries(headers.map((h, i) => [h, values[i] || ""])));
+    }
+
+    document.getElementById("addRow").onclick = () => addRow();
+    document.getElementById("addSample").onclick = () => { if (!state.rows.length) sampleRows.forEach(addRow); };
+    document.getElementById("clearRows").onclick = clearRows;
+    document.getElementById("exportCsv").onclick = () => { const blob = new Blob([toCsv(state.rows)], { type: "text/csv" }); const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "pha-scored.csv" }); a.click(); URL.revokeObjectURL(a.href); };
+    document.getElementById("importCsv").onchange = event => { const file = event.target.files[0]; if (!file) return; file.text().then(text => { state.rows = parseCsv(text).map(row => ({ ...row, severity: Number(row.severity || 1), likelihood: Number(row.likelihood || 1), status: row.status || "open" })); persist(); render(); }); };
+
+    if (!state.rows.length) sampleRows.forEach(row => state.rows.push(row));
+    render();
+  </script>
+</body>
+</html>
