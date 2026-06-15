@@ -1,28 +1,26 @@
 # PHA Tool
 
-PHA Tool is a lightweight Python toolkit for building and risk-ranking Process Hazard Analysis
-(PHA) or HAZOP worksheets. It provides:
+PHA Tool is now a standalone browser-based Process Hazard Analysis (PHA/HAZOP) worksheet. Open `index.html` directly in a browser; no Python runtime, package installation, web server, or build step is required.
 
-- A configurable 5x5 risk matrix.
-- Data models for PHA worksheet rows and recommendations.
-- CSV import/export for spreadsheet-friendly workflows.
-- A small CLI for scoring worksheets and creating starter templates.
+The HTML version provides:
 
-> Safety note: this tool is intended to support documentation and prioritization. It does not
-> replace qualified engineering judgment, site procedures, regulatory requirements, or formal
-> process safety reviews.
+- A configurable-feeling worksheet flow for PHA scenarios.
+- Clear, high-contrast dropdowns for severity, likelihood, and action status.
+- Automatic 5x5 risk scoring with low, medium, high, and critical bands.
+- A live summary of scenario counts, risk bands, and open actions.
+- An action tracker that rebuilds automatically from non-closed recommendations.
+- CSV import and scored CSV export for spreadsheet-friendly workflows.
+- Local browser storage so worksheet entries persist between sessions on the same device.
+
+> Safety note: this tool is intended to support documentation and prioritization. It does not replace qualified engineering judgment, site procedures, regulatory requirements, or formal process safety reviews.
 
 ## Quick start
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
-pha-tool template worksheet.csv
-pha-tool template worksheet.xlsx
-pha-tool score worksheet.csv --output scored.csv
-pha-tool score worksheet.csv --output scored.xlsx
-```
+1. Open `index.html` in a modern browser.
+2. Add or edit worksheet scenarios.
+3. Use severity and likelihood dropdowns to calculate risk automatically.
+4. Add recommendation text, owner, due date, and status to populate the action tracker.
+5. Export a scored CSV when you need a spreadsheet copy.
 
 ## Worksheet columns
 
@@ -42,7 +40,7 @@ The CSV interface uses the following columns:
 | `due_date` | Optional due date. |
 | `status` | Recommendation status. Defaults to `open`. |
 
-When scoring a worksheet, PHA Tool appends `risk_score`, `risk_band`, and `priority` columns.
+When exporting a worksheet, PHA Tool appends `risk_score`, `risk_band`, and `priority` columns.
 
 ## Risk bands
 
@@ -52,11 +50,3 @@ The default matrix multiplies severity by likelihood and assigns bands:
 - `medium`: score 5-9
 - `high`: score 10-16
 - `critical`: score 17-25
-
-## Development
-
-```bash
-python -m pytest
-python -m pha_tool template /tmp/worksheet.csv
-python -m pha_tool score /tmp/worksheet.csv --output /tmp/scored.csv
-```
