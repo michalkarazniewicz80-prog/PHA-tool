@@ -3,266 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PHA Tool</title>
+  <title>PHA / HAZOP Study Tool</title>
   <style>
-    :root {
-      color-scheme: light;
-      --bg: #f4f7fb;
-      --panel: #ffffff;
-      --ink: #122033;
-      --muted: #516070;
-      --line: #c7d2e2;
-      --brand: #0f5aa6;
-      --brand-dark: #083f78;
-      --low: #dff6e6;
-      --medium: #fff1c2;
-      --high: #ffd6ba;
-      --critical: #ffd1d9;
-      --shadow: 0 16px 40px rgba(18, 32, 51, 0.10);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #e8f2ff 0%, var(--bg) 42%, #fff 100%);
-      color: var(--ink);
-    }
-
-    header {
-      padding: 2rem clamp(1rem, 4vw, 3rem);
-      background: #0b335f;
-      color: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    header h1 { margin: 0 0 .35rem; font-size: clamp(2rem, 4vw, 3.6rem); }
-    header p { margin: 0; max-width: 78ch; color: #d9eaff; }
-
-    main { padding: clamp(1rem, 3vw, 2rem); display: grid; gap: 1.25rem; }
-
-    .toolbar, .panel {
-      background: rgba(255,255,255,.94);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: .8rem;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 5;
-    }
-
-    button, .file-button {
-      border: 0;
-      border-radius: 999px;
-      padding: .72rem 1rem;
-      font-weight: 750;
-      background: var(--brand);
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(15,90,166,.18);
-    }
-
-    button.secondary, .file-button { background: #e7eef8; color: var(--brand-dark); }
-    button.danger { background: #a61f3d; }
-    button:hover, .file-button:hover { filter: brightness(.96); transform: translateY(-1px); }
-    input[type="file"] { display: none; }
-
-    .panel { padding: 1rem; overflow: hidden; }
-    .panel h2 { margin: 0 0 .75rem; }
-
-    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
-    table { width: 100%; border-collapse: collapse; min-width: 1300px; background: #fff; }
-    th, td { border-bottom: 1px solid var(--line); padding: .7rem; vertical-align: top; text-align: left; }
-    th { background: #edf4fc; color: #16375a; position: sticky; top: 73px; z-index: 3; }
-    tr:hover td { background: #fbfdff; }
-
-    input, textarea, select {
-      width: 100%;
-      min-width: 8.5rem;
-      border: 2px solid #a8b8cb;
-      border-radius: 10px;
-      padding: .62rem .7rem;
-      background: #fff;
-      color: var(--ink);
-      font: inherit;
-    }
-
-    textarea { min-height: 4.8rem; resize: vertical; }
-
-    select {
-      appearance: none;
-      background-image: linear-gradient(45deg, transparent 50%, #062b52 50%), linear-gradient(135deg, #062b52 50%, transparent 50%), linear-gradient(to right, #d6e2f1, #d6e2f1);
-      background-position: calc(100% - 18px) 50%, calc(100% - 11px) 50%, 100% 0;
-      background-size: 7px 7px, 7px 7px, 2.8rem 100%;
-      background-repeat: no-repeat;
-      padding-right: 3.35rem;
-      font-weight: 700;
-    }
-
-    input:focus, textarea:focus, select:focus { outline: 3px solid #9bc8ff; border-color: var(--brand); }
-
-    .score { font-weight: 850; text-transform: capitalize; border-radius: 999px; display: inline-block; padding: .35rem .7rem; }
-    .low { background: var(--low); color: #116329; }
-    .medium { background: var(--medium); color: #775500; }
-    .high { background: var(--high); color: #8a3600; }
-    .critical { background: var(--critical); color: #8d0f2a; }
-
-    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .8rem; }
-    .card { border: 1px solid var(--line); border-radius: 14px; padding: 1rem; background: #f9fbfe; }
-    .card strong { display: block; font-size: 1.8rem; }
-
-    .actions table { min-width: 900px; }
-    .empty { color: var(--muted); padding: 1rem; }
-    footer { color: var(--muted); padding: 0 clamp(1rem, 3vw, 2rem) 2rem; }
+    :root{--bg:#eef2f6;--panel:#fff;--ink:#142033;--muted:#64748b;--line:#c9d3df;--brand:#0b4f8a;--brand2:#06345d;--nav:#0b2744;--low:#dff3e5;--medium:#fff2bf;--high:#ffd8b8;--critical:#f7c7cf;--closed:#dbeafe;--shadow:0 10px 28px rgba(20,32,51,.08)}
+    *{box-sizing:border-box} body{margin:0;font:13px/1.35 Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+    .app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;background:var(--nav);color:#fff;padding:18px 14px;overflow:auto}.brand{border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:14px;margin-bottom:14px}.brand h1{font-size:20px;margin:0 0 5px}.brand p{margin:0;color:#c9d8e8;font-size:12px}.nav a{display:block;color:#e8f1fb;text-decoration:none;padding:10px 12px;border-radius:8px;margin:3px 0;font-weight:700}.nav a:hover,.nav a.active{background:#164a78}.content{padding:18px;min-width:0}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.topbar h2{margin:0;font-size:22px}.statusline{color:var(--muted)}
+    section{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}section>header{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#f7f9fc;border-bottom:1px solid var(--line);padding:12px 14px}section h2{margin:0;font-size:17px;color:#0f355b}.section-body{padding:14px}.grid{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:10px}.grid .wide{grid-column:span 2}.grid .full{grid-column:1/-1}label{display:block;font-weight:700;color:#334155;margin-bottom:4px}input,select,textarea{width:100%;border:1px solid #aebccd;border-radius:7px;padding:7px 8px;background:#fff;color:var(--ink);font:inherit}textarea{min-height:68px;resize:vertical}.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}.toolbar input{max-width:330px}button,.filebtn{border:0;border-radius:7px;background:var(--brand);color:#fff;padding:8px 10px;font-weight:700;cursor:pointer;display:inline-block}button.secondary,.filebtn{background:#e6edf5;color:#123c63;border:1px solid #c3cfdd}button.danger{background:#a5253b}button.small{padding:5px 7px;font-size:12px}button:hover,.filebtn:hover{filter:brightness(.96)}input[type=file]{display:none}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:68vh}table{border-collapse:separate;border-spacing:0;width:100%;min-width:1100px;background:#fff}th,td{border-bottom:1px solid #dde5ee;border-right:1px solid #e6edf5;padding:6px;vertical-align:top;text-align:left}th{position:sticky;top:0;z-index:2;background:#eaf1f8;color:#14395e;font-size:12px}td input,td select,td textarea{min-width:120px;padding:5px 6px}td textarea{min-height:54px}.hazop{min-width:2500px}.matrix-table{min-width:620px}.pill{display:inline-block;border-radius:999px;padding:3px 8px;font-weight:800;white-space:nowrap}.risk-low{background:var(--low);color:#166534}.risk-medium{background:var(--medium);color:#7a5600}.risk-high{background:var(--high);color:#9a3412}.risk-critical{background:var(--critical);color:#9f1239}.status-open{background:#fee2e2;color:#991b1b}.status-progress{background:#fef3c7;color:#854d0e}.status-closed{background:var(--closed);color:#1e40af}.status-deferred{background:#e5e7eb;color:#374151}.cards{display:grid;grid-template-columns:repeat(5,minmax(145px,1fr));gap:10px}.card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}.card span{color:var(--muted);font-weight:700}.card strong{display:block;font-size:25px;margin-top:4px}.note{color:var(--muted);font-size:12px;margin-top:7px}.owner-list{columns:2}.hidden-row{display:none}@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.grid,.cards{grid-template-columns:1fr}.grid .wide{grid-column:auto}}
   </style>
 </head>
 <body>
-  <header>
-    <h1>PHA Tool</h1>
-    <p>Browser-only Process Hazard Analysis worksheet with automatic risk ranking, visible dropdown controls, CSV import/export, and an action tracker that rebuilds itself from recommendations.</p>
-  </header>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>PHA / HAZOP Tool</h1><p>Self-contained HTML prototype with local save, worksheet, safeguards, actions and dashboard.</p></div>
+    <nav class="nav" id="nav">
+      <a href="#setup">Study Setup</a><a href="#nodes">Node Register</a><a href="#worksheet">HAZOP Worksheet</a><a href="#safeguards">Safeguard Library</a><a href="#riskmatrix">Risk Matrix</a><a href="#actions">Actions</a><a href="#dashboard">Dashboard</a><a href="#importexport">Import / Export</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="topbar"><div><h2 id="studyHeading">Process Hazard Analysis Study</h2><div class="statusline" id="saveStatus">Ready</div></div><button class="secondary" onclick="saveAll()">Save now</button></div>
 
-  <main>
-    <section class="toolbar" aria-label="Worksheet actions">
-      <button id="addRow">Add scenario</button>
-      <button id="addSample" class="secondary">Load sample</button>
-      <button id="exportCsv" class="secondary">Export scored CSV</button>
-      <label class="file-button" for="importCsv">Import CSV</label>
-      <input id="importCsv" type="file" accept=".csv,text/csv">
-      <button id="clearRows" class="danger">Clear worksheet</button>
-    </section>
+    <section id="setup"><header><h2>Study Setup</h2></header><div class="section-body"><div class="grid" id="setupFields"></div></div></section>
 
-    <section class="panel">
-      <h2>Worksheet</h2>
-      <div class="summary" id="summary"></div>
-      <div class="table-wrap">
-        <table id="worksheetTable">
-          <thead>
-            <tr>
-              <th>Node</th><th>Deviation</th><th>Cause</th><th>Consequence</th><th>Safeguards</th>
-              <th>Severity</th><th>Likelihood</th><th>Risk</th><th>Recommendation</th><th>Owner</th><th>Due date</th><th>Status</th><th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+    <section id="nodes"><header><h2>Node Register</h2><button onclick="addNode()">Add node</button></header><div class="section-body"><div class="toolbar"><input id="nodeSearch" placeholder="Filter nodes..." oninput="renderNodes()"></div><div class="table-wrap"><table><thead><tr><th>Node ID</th><th>Node description</th><th>Design intent</th><th>Boundaries</th><th>Documents</th><th>Action</th></tr></thead><tbody id="nodeBody"></tbody></table></div></div></section>
 
-    <section class="panel actions">
-      <h2>Action tracker <small>(auto-built from recommendations)</small></h2>
-      <div id="actions"></div>
-    </section>
+    <section id="worksheet"><header><h2>HAZOP Worksheet</h2><div><button onclick="addHazopRow()">Add row</button> <button class="secondary" onclick="duplicateSelectedRow()">Duplicate selected</button> <button class="danger" onclick="deleteSelectedRow()">Delete selected</button></div></header><div class="section-body"><div class="toolbar"><input id="hazopSearch" placeholder="Search worksheet..." oninput="renderHazop()"><select id="nodeFilter" onchange="renderHazop()"><option value="">All nodes</option></select><select id="riskFilter" onchange="renderHazop()"><option value="">All residual risks</option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div><div class="table-wrap"><table class="hazop"><thead><tr><th>Select</th><th>#</th><th>Node</th><th>Guideword</th><th>Parameter</th><th>Deviation</th><th>Cause</th><th>Consequence</th><th>Safeguard</th><th>Safeguard type</th><th>Credit</th><th>Validation / evidence</th><th>Raw Sev</th><th>Raw Lik</th><th>Raw Risk</th><th>Residual Sev</th><th>Residual Lik</th><th>Residual Risk</th><th>Recommendation</th><th>Action owner</th><th>Due date</th><th>Status</th><th>Comments</th></tr></thead><tbody id="hazopBody"></tbody></table></div><p class="note">Residual risk is a review prompt and remains “to be agreed by study team”; procedure and operator-monitoring credits are constrained by safeguard configuration.</p></div></section>
+
+    <section id="safeguards"><header><h2>Safeguard Library</h2><button onclick="addSafeguard()">Add safeguard</button></header><div class="section-body"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>Default credit</th><th>Criteria / notes</th><th>Action</th></tr></thead><tbody id="safeguardBody"></tbody></table></div></div></section>
+
+    <section id="riskmatrix"><header><h2>Risk Matrix</h2></header><div class="section-body"><div id="matrix"></div><p class="note">Risk = severity × likelihood using configurable bands. Safeguard credits reduce likelihood for screening only and do not replace study-team agreement.</p></div></section>
+
+    <section id="actions"><header><h2>Actions</h2></header><div class="section-body"><div class="toolbar"><input id="actionSearch" placeholder="Filter actions..." oninput="renderActions()"></div><div id="actionsTable"></div></div></section>
+
+    <section id="dashboard"><header><h2>Dashboard</h2></header><div class="section-body"><div class="cards" id="cards"></div><h3>Open actions by owner</h3><div id="ownerSummary" class="owner-list"></div></div></section>
+
+    <section id="importexport"><header><h2>Import / Export</h2></header><div class="section-body"><div class="toolbar"><button onclick="exportCsv()">Export worksheet CSV</button><button onclick="exportJson()">Export JSON backup</button><label class="filebtn" for="jsonFile">Import JSON backup</label><input id="jsonFile" type="file" accept="application/json,.json" onchange="importJson(event)"><button class="secondary" onclick="resetDemo()">Reset demo data</button><button class="danger" onclick="clearLocal()">Clear local save</button></div><textarea id="jsonPreview" class="full" placeholder="Export preview / import messages" readonly></textarea></div></section>
   </main>
-
-  <footer>
-    Safety note: this tool supports documentation and prioritization only. It does not replace qualified engineering judgment, site procedures, regulatory requirements, or formal process safety reviews.
-  </footer>
-
-  <script>
-    const fields = ["node", "deviation", "cause", "consequence", "safeguards", "severity", "likelihood", "recommendation", "owner", "due_date", "status"];
-    const state = { rows: JSON.parse(localStorage.getItem("phaRows") || "[]") };
-    const sampleRows = [{ node: "Reactor", deviation: "High temperature", cause: "Cooling failure", consequence: "Overpressure or runaway reaction", safeguards: "High temperature alarm; PSV", severity: 5, likelihood: 3, recommendation: "Evaluate independent high-temperature trip", owner: "Controls", due_date: "2026-12-31", status: "open" }];
-
-    function score(row) {
-      const severity = Number(row.severity || 1);
-      const likelihood = Number(row.likelihood || 1);
-      const risk_score = severity * likelihood;
-      const risk_band = risk_score >= 17 ? "critical" : risk_score >= 10 ? "high" : risk_score >= 5 ? "medium" : "low";
-      const priority = { critical: 1, high: 2, medium: 3, low: 4 }[risk_band];
-      return { risk_score, risk_band, priority };
-    }
-
-    function persist() { localStorage.setItem("phaRows", JSON.stringify(state.rows)); }
-
-    function setValue(index, field, value) {
-      state.rows[index][field] = ["severity", "likelihood"].includes(field) ? Number(value) : value;
-      persist();
-      if (["severity", "likelihood", "status"].includes(field)) {
-        render();
-      } else {
-        renderSummary();
-        renderActions();
-      }
-    }
-
-    function control(row, index, field) {
-      if (["severity", "likelihood"].includes(field)) {
-        return `<select aria-label="${field}" onchange="setValue(${index}, '${field}', this.value)">${[1,2,3,4,5].map(v => `<option value="${v}" ${Number(row[field]) === v ? "selected" : ""}>${v}</option>`).join("")}</select>`;
-      }
-      if (field === "status") {
-        return `<select aria-label="status" onchange="setValue(${index}, 'status', this.value)">${["open", "in progress", "closed", "deferred"].map(v => `<option value="${v}" ${row.status === v ? "selected" : ""}>${v}</option>`).join("")}</select>`;
-      }
-      const tag = ["cause", "consequence", "safeguards", "recommendation"].includes(field) ? "textarea" : "input";
-      const value = String(row[field] || "").replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
-      return tag === "textarea" ? `<textarea oninput="setValue(${index}, '${field}', this.value)">${value}</textarea>` : `<input value="${value}" oninput="setValue(${index}, '${field}', this.value)">`;
-    }
-
-    function render() {
-      const tbody = document.querySelector("#worksheetTable tbody");
-      tbody.innerHTML = state.rows.map((row, index) => {
-        const result = score(row);
-        return `<tr>${fields.slice(0, 7).map(field => `<td>${control(row, index, field)}</td>`).join("")}<td><span class="score ${result.risk_band}">${result.risk_score} ${result.risk_band}<br>Priority ${result.priority}</span></td>${fields.slice(7).map(field => `<td>${control(row, index, field)}</td>`).join("")}<td><button class="danger" onclick="removeRow(${index})">Remove</button></td></tr>`;
-      }).join("");
-      renderSummary();
-      renderActions();
-    }
-
-    function renderSummary() {
-      const counts = { total: state.rows.length, critical: 0, high: 0, medium: 0, low: 0, openActions: 0 };
-      state.rows.forEach(row => { const result = score(row); counts[result.risk_band]++; if (row.recommendation && row.status !== "closed") counts.openActions++; });
-      document.getElementById("summary").innerHTML = [`Scenarios:${counts.total}`, `Critical:${counts.critical}`, `High:${counts.high}`, `Medium:${counts.medium}`, `Low:${counts.low}`, `Open actions:${counts.openActions}`].map(item => { const [label, value] = item.split(":"); return `<div class="card"><span>${label}</span><strong>${value}</strong></div>`; }).join("");
-    }
-
-    function renderActions() {
-      const actions = state.rows.map((row, index) => ({ ...row, index, ...score(row) })).filter(row => row.recommendation && row.status !== "closed").sort((a, b) => a.priority - b.priority || String(a.due_date).localeCompare(String(b.due_date)));
-      document.getElementById("actions").innerHTML = actions.length ? `<div class="table-wrap"><table><thead><tr><th>Priority</th><th>Risk</th><th>Recommendation</th><th>Owner</th><th>Due</th><th>Status</th><th>Scenario</th></tr></thead><tbody>${actions.map(row => `<tr><td>${row.priority}</td><td><span class="score ${row.risk_band}">${row.risk_band}</span></td><td>${escapeHtml(row.recommendation)}</td><td>${escapeHtml(row.owner)}</td><td>${escapeHtml(row.due_date)}</td><td>${escapeHtml(row.status)}</td><td>${escapeHtml(row.node)} / ${escapeHtml(row.deviation)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="empty">No open recommendations yet. Add recommendation text to a worksheet row and the tracker will build automatically.</p>`;
-    }
-
-    function escapeHtml(value) { return String(value || "").replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;'); }
-    function addRow(row = {}) { state.rows.push({ node: "", deviation: "", cause: "", consequence: "", safeguards: "", severity: 1, likelihood: 1, recommendation: "", owner: "", due_date: "", status: "open", ...row }); persist(); render(); }
-    function removeRow(index) { state.rows.splice(index, 1); persist(); render(); }
-    function clearRows() { state.rows = []; persist(); render(); }
-
-    function toCsv(rows) {
-      const scoredFields = [...fields, "risk_score", "risk_band", "priority"];
-      const lines = [scoredFields.join(",")];
-      rows.forEach(row => { const result = score(row); lines.push(scoredFields.map(field => `"${String(({ ...row, ...result })[field] ?? "").replaceAll('"', '""')}"`).join(",")); });
-      return lines.join("\n");
-    }
-
-    function parseCsv(text) {
-      const rows = [];
-      let row = [], value = "", quoted = false;
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i], next = text[i + 1];
-        if (char === '"' && quoted && next === '"') { value += '"'; i++; }
-        else if (char === '"') quoted = !quoted;
-        else if (char === ',' && !quoted) { row.push(value); value = ""; }
-        else if ((char === '\n' || char === '\r') && !quoted) { if (char === '\r' && next === '\n') i++; row.push(value); rows.push(row); row = []; value = ""; }
-        else value += char;
-      }
-      if (value || row.length) { row.push(value); rows.push(row); }
-      const headers = rows.shift().map(h => h.trim());
-      return rows.filter(r => r.some(Boolean)).map(values => Object.fromEntries(headers.map((h, i) => [h, values[i] || ""])));
-    }
-
-    document.getElementById("addRow").onclick = () => addRow();
-    document.getElementById("addSample").onclick = () => { if (!state.rows.length) sampleRows.forEach(addRow); };
-    document.getElementById("clearRows").onclick = clearRows;
-    document.getElementById("exportCsv").onclick = () => { const blob = new Blob([toCsv(state.rows)], { type: "text/csv" }); const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "pha-scored.csv" }); a.click(); URL.revokeObjectURL(a.href); };
-    document.getElementById("importCsv").onchange = event => { const file = event.target.files[0]; if (!file) return; file.text().then(text => { state.rows = parseCsv(text).map(row => ({ ...row, severity: Number(row.severity || 1), likelihood: Number(row.likelihood || 1), status: row.status || "open" })); persist(); render(); }); };
-
-    if (!state.rows.length) sampleRows.forEach(row => state.rows.push(row));
-    render();
-  </script>
+</div>
+<script>
+const LS_KEY='phaCommercialPrototype.v1';
+const lists={guidewords:['No','More','Less','As well as','Part of','Reverse','Other than','Early','Late'],parameters:['Flow','Pressure','Temperature','Level','Composition','Reaction','Containment','Utilities','Human Factors'],sev:[1,2,3,4,5],lik:[1,2,3,4,5],statuses:['Open','In Progress','Closed','Deferred'],studyTypes:['HAZOP','What-if','PHA Revalidation','LOPA screening'],sgTypes:['Operator monitoring','Procedure','Alarm-driven operator response','BPCS','Relief device','Automatic engineered safeguard','SIS / interlock','Passive engineered safeguard'],credits:['0','1','2','3']};
+const demo={setup:{title:'PHA Revalidation - Reactor Feed System',site:'Demo Chemical Site',area:'North Area',unit:'Reactor Feed and Charge',type:'HAZOP',facilitator:'A. Facilitator',scribe:'S. Scribe',team:'Operations, Process Engineering, Controls, Maintenance, Process Safety',revision:'0',date:'2026-06-16',assumptions:'Normal operating, startup and shutdown modes considered. Final residual risk to be agreed by study team.'},nodes:[{id:'N-01',description:'Feed storage tank to feed pump suction',intent:'Provide stable feed inventory and NPSH to charge pump.',boundaries:'Tank outlet nozzle through pump suction isolation valve.',documents:'P&ID P-1001, C&E C-210'},{id:'N-02',description:'Charge pump discharge to reactor inlet',intent:'Deliver controlled feed flow to reactor.',boundaries:'Pump discharge check valve through reactor feed control valve.',documents:'P&ID P-1002, datasheet P-201A/B'},{id:'N-03',description:'Reactor cooling water circuit',intent:'Remove reaction heat and maintain reactor temperature.',boundaries:'Cooling water supply header through exchanger return.',documents:'P&ID U-3005, control narrative CN-14'}],safeguards:[{name:'Operator field rounds',type:'Operator monitoring',credit:0,notes:'No automatic credit for risk reduction when monitoring is not alarm-driven and time-confirmed.'},{name:'Approved operating procedure',type:'Procedure',credit:0,notes:'Procedure alone is administrative; credit only by study-team decision with effective alarm-driven response.'},{name:'High pressure alarm with response',type:'Alarm-driven operator response',credit:1,notes:'Credit requires independent indication, alarm rationalization and adequate response time.'},{name:'Basic process control loop',type:'BPCS',credit:1,notes:'May receive one credit where independent from initiating cause.'},{name:'Pressure safety valve',type:'Relief device',credit:2,notes:'Requires sizing basis, inspection and discharge destination confirmation.'},{name:'High-high temperature trip',type:'SIS / interlock',credit:2,notes:'Credit depends on independence, proof testing and target SIL.'},{name:'Diked containment',type:'Passive engineered safeguard',credit:2,notes:'Passive protection subject to inspection and capacity verification.'}],hazop:[{node:'N-01',guideword:'Less',parameter:'Flow',deviation:'Low / no feed to pump',cause:'Tank outlet blocked or suction valve closed',consequence:'Pump cavitation, loss of feed, potential seal damage',safeguard:'Low flow alarm; operator rounds',sgType:'Alarm-driven operator response',credit:1,evidence:'Alarm in control narrative; response time to be confirmed',rawSev:3,rawLik:3,resSev:3,resLik:2,recommendation:'Confirm low-flow alarm response time and add pump protection trip if inadequate.',owner:'Operations',due:'2026-09-30',status:'Open',comments:'Residual risk to be agreed by study team.'},{node:'N-02',guideword:'More',parameter:'Pressure',deviation:'High discharge pressure',cause:'Downstream valve closed while pump running',consequence:'Line overpressure or flange leak',safeguard:'PSV; discharge pressure alarm',sgType:'Relief device',credit:2,evidence:'PSV datasheet PSV-201; inspection record pending',rawSev:4,rawLik:3,resSev:4,resLik:1,recommendation:'Verify PSV set pressure and blocked outlet relief case.',owner:'Process Eng',due:'2026-08-15',status:'In Progress',comments:''},{node:'N-03',guideword:'More',parameter:'Temperature',deviation:'High reactor temperature',cause:'Cooling water control valve fails closed',consequence:'Runaway reaction and reactor overpressure',safeguard:'HH temperature trip; PSV',sgType:'SIS / interlock',credit:2,evidence:'SIF-101 proof test interval under review',rawSev:5,rawLik:3,resSev:5,resLik:1,recommendation:'Complete SIF verification and document achieved SIL.',owner:'Controls',due:'2026-07-01',status:'Open',comments:'High consequence scenario.'}]};
+let state=load();let selectedRow=null;
+function load(){try{return JSON.parse(localStorage.getItem(LS_KEY))||structuredClone(demo)}catch{return structuredClone(demo)}}
+function saveAll(){localStorage.setItem(LS_KEY,JSON.stringify(state));document.getElementById('saveStatus').textContent='Saved '+new Date().toLocaleString();}
+function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
+function riskBand(s,l){const n=Number(s)*Number(l);return n>=17?'Critical':n>=10?'High':n>=5?'Medium':'Low'}
+function riskHtml(s,l){const b=riskBand(s,l),n=Number(s)*Number(l);return `<span class="pill risk-${b.toLowerCase()}">${n} ${b}</span>`}
+function constrainedCredit(type,credit){credit=Number(credit||0); if(type==='Operator monitoring'||type==='Procedure') return 0; if(type==='BPCS') return Math.min(1,credit); if(type==='Alarm-driven operator response') return Math.min(1,credit); return credit;}
+function residualLik(rawLik,type,credit){return Math.max(1,Number(rawLik||1)-constrainedCredit(type,credit))}
+function input(obj,key,on,wide=false){return `<input value="${esc(obj[key])}" oninput="${on}" ${wide?'class="wide"':''}>`}
+function select(value,arr,on){return `<select onchange="${on}">${arr.map(x=>`<option ${String(value)===String(x)?'selected':''}>${esc(x)}</option>`).join('')}</select>`}
+function renderSetup(){const f=[['title','Study title'],['site','Site / area'],['unit','Process unit'],['type','Study type'],['facilitator','Facilitator'],['scribe','Scribe'],['team','Study team'],['revision','Revision'],['date','Study date'],['assumptions','Assumptions / exclusions']];document.getElementById('setupFields').innerHTML=f.map(([k,l])=>`<div class="${k==='assumptions'||k==='team'?'full':''}"><label>${l}</label>${k==='type'?select(state.setup[k],lists.studyTypes,`state.setup.${k}=this.value;saveAll();renderSetup()`):k==='assumptions'||k==='team'?`<textarea oninput="state.setup.${k}=this.value;saveAll()">${esc(state.setup[k])}</textarea>`:`<input type="${k==='date'?'date':'text'}" value="${esc(state.setup[k])}" oninput="state.setup.${k}=this.value;${k==='title'?'document.getElementById(\'studyHeading\').textContent=this.value;':''}saveAll()">`}</div>`).join('');document.getElementById('studyHeading').textContent=state.setup.title;}
+function renderNodes(){const q=(document.getElementById('nodeSearch')?.value||'').toLowerCase();document.getElementById('nodeBody').innerHTML=state.nodes.map((n,i)=>({...n,i})).filter(n=>JSON.stringify(n).toLowerCase().includes(q)).map(n=>`<tr><td>${input(n,'id',`state.nodes[${n.i}].id=this.value;saveAll();renderNodeOptions()` )}</td><td>${input(n,'description',`state.nodes[${n.i}].description=this.value;saveAll()` )}</td><td><textarea oninput="state.nodes[${n.i}].intent=this.value;saveAll()">${esc(n.intent)}</textarea></td><td><textarea oninput="state.nodes[${n.i}].boundaries=this.value;saveAll()">${esc(n.boundaries)}</textarea></td><td>${input(n,'documents',`state.nodes[${n.i}].documents=this.value;saveAll()` )}</td><td><button class="danger small" onclick="if(confirm('Delete node?')){state.nodes.splice(${n.i},1);saveAll();renderAll()}">Delete</button></td></tr>`).join('')}
+function renderNodeOptions(){const el=document.getElementById('nodeFilter'),current=el.value;const opts='<option value="">All nodes</option>'+state.nodes.map(n=>`<option ${current===n.id?'selected':''}>${esc(n.id)}</option>`).join('');el.innerHTML=opts;}
+function renderHazop(){renderNodeOptions();const q=(document.getElementById('hazopSearch').value||'').toLowerCase(),nf=document.getElementById('nodeFilter').value,rf=document.getElementById('riskFilter').value;document.getElementById('hazopBody').innerHTML=state.hazop.map((r,i)=>({...r,i})).filter(r=>(!nf||r.node===nf)&&(!rf||riskBand(r.resSev,r.resLik)===rf)&&JSON.stringify(r).toLowerCase().includes(q)).map(r=>rowHtml(r)).join('');renderActions();renderDashboard();}
+function rowHtml(r){const i=r.i;return `<tr><td><input type="radio" name="sel" ${selectedRow===i?'checked':''} onchange="selectedRow=${i}"></td><td>${i+1}</td><td>${select(r.node,state.nodes.map(n=>n.id),`state.hazop[${i}].node=this.value;saveAll();renderDashboard()` )}</td><td>${select(r.guideword,lists.guidewords,`state.hazop[${i}].guideword=this.value;saveAll()` )}</td><td>${select(r.parameter,lists.parameters,`state.hazop[${i}].parameter=this.value;saveAll()` )}</td><td>${input(r,'deviation',`state.hazop[${i}].deviation=this.value;saveAll()` )}</td><td><textarea oninput="state.hazop[${i}].cause=this.value;saveAll()">${esc(r.cause)}</textarea></td><td><textarea oninput="state.hazop[${i}].consequence=this.value;saveAll()">${esc(r.consequence)}</textarea></td><td><textarea oninput="state.hazop[${i}].safeguard=this.value;saveAll()">${esc(r.safeguard)}</textarea></td><td>${select(r.sgType,lists.sgTypes,`state.hazop[${i}].sgType=this.value;state.hazop[${i}].credit=constrainedCredit(this.value,state.hazop[${i}].credit);state.hazop[${i}].resLik=residualLik(state.hazop[${i}].rawLik,this.value,state.hazop[${i}].credit);saveAll();renderHazop()` )}</td><td>${select(constrainedCredit(r.sgType,r.credit),lists.credits,`state.hazop[${i}].credit=constrainedCredit(state.hazop[${i}].sgType,this.value);state.hazop[${i}].resLik=residualLik(state.hazop[${i}].rawLik,state.hazop[${i}].sgType,state.hazop[${i}].credit);saveAll();renderHazop()` )}</td><td><textarea oninput="state.hazop[${i}].evidence=this.value;saveAll()">${esc(r.evidence)}</textarea></td><td>${select(r.rawSev,lists.sev,`state.hazop[${i}].rawSev=Number(this.value);state.hazop[${i}].resSev=Number(this.value);saveAll();renderHazop()` )}</td><td>${select(r.rawLik,lists.lik,`state.hazop[${i}].rawLik=Number(this.value);state.hazop[${i}].resLik=residualLik(this.value,state.hazop[${i}].sgType,state.hazop[${i}].credit);saveAll();renderHazop()` )}</td><td>${riskHtml(r.rawSev,r.rawLik)}</td><td>${select(r.resSev,lists.sev,`state.hazop[${i}].resSev=Number(this.value);saveAll();renderHazop()` )}</td><td>${select(r.resLik,lists.lik,`state.hazop[${i}].resLik=Number(this.value);saveAll();renderHazop()` )}</td><td>${riskHtml(r.resSev,r.resLik)}<div class="note">To be agreed</div></td><td><textarea oninput="state.hazop[${i}].recommendation=this.value;saveAll();renderActions();renderDashboard()">${esc(r.recommendation)}</textarea></td><td>${input(r,'owner',`state.hazop[${i}].owner=this.value;saveAll();renderActions();renderDashboard()` )}</td><td><input type="date" value="${esc(r.due)}" oninput="state.hazop[${i}].due=this.value;saveAll();renderActions();renderDashboard()"></td><td>${select(r.status,lists.statuses,`state.hazop[${i}].status=this.value;saveAll();renderHazop()` )}</td><td><textarea oninput="state.hazop[${i}].comments=this.value;saveAll()">${esc(r.comments)}</textarea></td></tr>`}
+function renderSafeguards(){document.getElementById('safeguardBody').innerHTML=state.safeguards.map((s,i)=>`<tr><td>${input(s,'name',`state.safeguards[${i}].name=this.value;saveAll()` )}</td><td>${select(s.type,lists.sgTypes,`state.safeguards[${i}].type=this.value;state.safeguards[${i}].credit=constrainedCredit(this.value,state.safeguards[${i}].credit);saveAll();renderSafeguards()` )}</td><td>${select(constrainedCredit(s.type,s.credit),lists.credits,`state.safeguards[${i}].credit=constrainedCredit(state.safeguards[${i}].type,this.value);saveAll();renderSafeguards()` )}</td><td><textarea oninput="state.safeguards[${i}].notes=this.value;saveAll()">${esc(s.notes)}</textarea></td><td><button class="danger small" onclick="if(confirm('Delete safeguard?')){state.safeguards.splice(${i},1);saveAll();renderSafeguards()}">Delete</button></td></tr>`).join('')}
+function renderMatrix(){let h='<table class="matrix-table"><thead><tr><th>Likelihood \\ Severity</th>';for(let s=1;s<=5;s++)h+=`<th>${s}</th>`;h+='</tr></thead><tbody>';for(let l=5;l>=1;l--){h+=`<tr><th>${l}</th>`;for(let s=1;s<=5;s++)h+=`<td>${riskHtml(s,l)}</td>`;h+='</tr>'}document.getElementById('matrix').innerHTML='<div class="table-wrap">'+h+'</tbody></table></div>'}
+function actions(){return state.hazop.map((r,i)=>({...r,i,band:riskBand(r.resSev,r.resLik)})).filter(r=>r.recommendation)}
+function renderActions(){const q=(document.getElementById('actionSearch')?.value||'').toLowerCase();const rows=actions().filter(r=>JSON.stringify(r).toLowerCase().includes(q));document.getElementById('actionsTable').innerHTML='<div class="table-wrap"><table><thead><tr><th>Risk</th><th>Recommendation</th><th>Owner</th><th>Due</th><th>Status</th><th>Scenario</th></tr></thead><tbody>'+rows.map(r=>`<tr><td>${riskHtml(r.resSev,r.resLik)}</td><td>${esc(r.recommendation)}</td><td>${esc(r.owner)}</td><td>${esc(r.due)}</td><td><span class="pill status-${r.status==='In Progress'?'progress':r.status.toLowerCase()}">${esc(r.status)}</span></td><td>${esc(r.node)} / ${esc(r.deviation)}</td></tr>`).join('')+'</tbody></table></div>'}
+function renderDashboard(){const today=new Date().toISOString().slice(0,10),open=actions().filter(a=>a.status!=='Closed'),high=state.hazop.filter(r=>['High','Critical'].includes(riskBand(r.resSev,r.resLik))).length,over=open.filter(a=>a.due&&a.due<today).length;document.getElementById('cards').innerHTML=[['Nodes',state.nodes.length],['Worksheet rows',state.hazop.length],['Open actions',open.length],['High residual risk',high],['Overdue actions',over]].map(c=>`<div class="card"><span>${c[0]}</span><strong>${c[1]}</strong></div>`).join('');const owners={};open.forEach(a=>owners[a.owner||'Unassigned']=(owners[a.owner||'Unassigned']||0)+1);document.getElementById('ownerSummary').innerHTML=Object.entries(owners).map(([o,c])=>`<p><strong>${esc(o)}:</strong> ${c}</p>`).join('')||'<p>No open actions.</p>'}
+function addNode(){state.nodes.push({id:'N-'+String(state.nodes.length+1).padStart(2,'0'),description:'',intent:'',boundaries:'',documents:''});saveAll();renderAll()}function addSafeguard(){state.safeguards.push({name:'New safeguard',type:'BPCS',credit:1,notes:''});saveAll();renderSafeguards()}function addHazopRow(){state.hazop.push({node:state.nodes[0]?.id||'',guideword:'No',parameter:'Flow',deviation:'',cause:'',consequence:'',safeguard:'',sgType:'Procedure',credit:0,evidence:'',rawSev:1,rawLik:1,resSev:1,resLik:1,recommendation:'',owner:'',due:'',status:'Open',comments:'Residual risk to be agreed by study team.'});selectedRow=state.hazop.length-1;saveAll();renderHazop()}function duplicateSelectedRow(){if(selectedRow===null)return alert('Select a worksheet row first.');state.hazop.splice(selectedRow+1,0,structuredClone(state.hazop[selectedRow]));selectedRow++;saveAll();renderHazop()}function deleteSelectedRow(){if(selectedRow===null)return alert('Select a worksheet row first.');if(confirm('Delete selected worksheet row?')){state.hazop.splice(selectedRow,1);selectedRow=null;saveAll();renderHazop()}}
+function exportCsv(){const cols=['node','guideword','parameter','deviation','cause','consequence','safeguard','sgType','credit','evidence','rawSev','rawLik','rawRisk','resSev','resLik','resRisk','recommendation','owner','due','status','comments'];const lines=[cols.join(',')];state.hazop.forEach(r=>lines.push(cols.map(c=>`"${String(c==='rawRisk'?Number(r.rawSev)*Number(r.rawLik):c==='resRisk'?Number(r.resSev)*Number(r.resLik):r[c]??'').replaceAll('"','""')}"`).join(',')));download('hazop-worksheet.csv',lines.join('\n'),'text/csv')}
+function exportJson(){const text=JSON.stringify(state,null,2);document.getElementById('jsonPreview').value=text;download('pha-backup.json',text,'application/json')}function importJson(e){const f=e.target.files[0];if(!f)return;f.text().then(t=>{const data=JSON.parse(t);if(!confirm('Import will replace current study, node register, HAZOP table and safeguard library. Continue?'))return;state=data;saveAll();renderAll();document.getElementById('jsonPreview').value='Imported '+f.name})}function resetDemo(){if(confirm('Reset demo data? This will replace current study, worksheet, nodes and safeguard library.')){state=structuredClone(demo);selectedRow=null;saveAll();renderAll()}}function clearLocal(){if(confirm('Clear localStorage save? Current screen data remains until reload or reset.')){localStorage.removeItem(LS_KEY);document.getElementById('saveStatus').textContent='Local save cleared'}}function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function renderAll(){renderSetup();renderNodes();renderHazop();renderSafeguards();renderMatrix();renderActions();renderDashboard()}renderAll();
+</script>
 </body>
 </html>
