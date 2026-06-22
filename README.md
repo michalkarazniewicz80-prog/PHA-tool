@@ -12,7 +12,7 @@ The HTML version provides:
 - Process and environmental consequence rows are created as paired worksheet entries, each with its own risk-rating dropdowns.
 - A live summary of scenario counts, risk bands, and open actions.
 - An action tracker that rebuilds automatically from non-closed recommendations.
-- CSV import and scored CSV export for spreadsheet-friendly workflows.
+- CSV import, scored CSV export, and formatted Excel export with wrapped text plus fixed column widths and row heights for spreadsheet-friendly workflows.
 - Local browser storage so worksheet entries persist between sessions on the same device.
 
 > Safety note: this tool is intended to support documentation and prioritization. It does not replace qualified engineering judgment, site procedures, regulatory requirements, or formal process safety reviews.
