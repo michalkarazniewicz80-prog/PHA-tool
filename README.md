@@ -7,6 +7,8 @@ The HTML version provides:
 - A configurable-feeling worksheet flow for PHA scenarios.
 - Clear, high-contrast dropdowns for severity, likelihood, and action status.
 - Automatic 5x5 risk scoring with low, medium, high, and critical bands.
+- Separate action tracker and dashboard pop-up windows for focused review.
+- Process and environmental consequence rows are created as paired worksheet entries, each with its own risk-rating dropdowns.
 - A live summary of scenario counts, risk bands, and open actions.
 - An action tracker that rebuilds automatically from non-closed recommendations.
 - CSV import and scored CSV export for spreadsheet-friendly workflows.
