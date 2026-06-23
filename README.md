@@ -8,9 +8,11 @@ The HTML version provides:
 - A configurable-feeling worksheet flow for PHA scenarios.
 - Clear, high-contrast dropdowns for severity, likelihood, and action status.
 - Automatic 5x5 risk scoring with low, medium, high, and critical bands.
-- Worksheet residual severity/likelihood are calculated automatically, with likelihood credit taken from the selected safeguard type defaults maintained in the safeguard library.
+- Worksheet residual severity/likelihood are calculated automatically, with likelihood credit summed from selected safeguard type defaults maintained in the safeguard library.
 - Separate action tracker and dashboard pop-up windows for focused review.
 - Process and environmental consequence rows are created as paired worksheet entries, each with its own risk-rating dropdowns.
+- Each worksheet row supports three safeguard entries, each paired with its own safeguard type.
+- Deviations are suggested automatically from the selected parameter and guideword.
 - A live summary of scenario counts, risk bands, and open actions.
 - An action tracker that rebuilds automatically from non-closed recommendations.
 - CSV import, scored CSV export, and native .xlsx formatted Excel export with wrapped text plus fixed column widths and row heights for spreadsheet-friendly workflows.
