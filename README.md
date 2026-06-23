@@ -4,12 +4,15 @@ PHA Tool is now a standalone browser-based Process Hazard Analysis (PHA/HAZOP) w
 
 The HTML version provides:
 
+- Navigation-driven screens so setup, nodes, worksheet, safeguards, actions, and dashboard views appear one at a time instead of stacked on one page, with export/import controls kept in the persistent top toolbar.
 - A configurable-feeling worksheet flow for PHA scenarios.
 - Clear, high-contrast dropdowns for severity, likelihood, and action status.
 - Automatic 5x5 risk scoring with low, medium, high, and critical bands.
+- Separate action tracker and dashboard pop-up windows for focused review.
+- Process and environmental consequence rows are created as paired worksheet entries, each with its own risk-rating dropdowns.
 - A live summary of scenario counts, risk bands, and open actions.
 - An action tracker that rebuilds automatically from non-closed recommendations.
-- CSV import and scored CSV export for spreadsheet-friendly workflows.
+- CSV import, scored CSV export, and native .xlsx formatted Excel export with wrapped text plus fixed column widths and row heights for spreadsheet-friendly workflows.
 - Local browser storage so worksheet entries persist between sessions on the same device.
 
 > Safety note: this tool is intended to support documentation and prioritization. It does not replace qualified engineering judgment, site procedures, regulatory requirements, or formal process safety reviews.
