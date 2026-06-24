@@ -8,13 +8,13 @@ The HTML version provides:
 - A configurable-feeling worksheet flow for PHA scenarios.
 - Clear, high-contrast dropdowns for severity, likelihood, and action status.
 - Automatic 5x5 risk scoring with low, medium, high, and critical bands.
-- Worksheet residual severity and likelihood remain manually adjustable by the facilitator/study team. Validated safeguards report only the highest single available safeguard credit; credits are not summed, and preventative versus mitigative categories screen likelihood versus severity respectively.
+- Worksheet residual severity and likelihood remain manually adjustable by the facilitator/study team. Validated safeguards report the highest single preventative credit and highest single mitigative credit separately; credits are not summed within a category. Preventative safeguard credit affects suggested residual likelihood, while mitigative safeguard credit affects suggested residual severity.
 - Separate action tracker and dashboard pop-up windows for focused review.
 - Process and environmental consequence rows are created as paired worksheet entries, each with its own risk-rating dropdowns.
 - Each worksheet row supports three safeguard entries, each paired with its own safeguard type, validation status, and evidence field. Only safeguards marked `Validated` are eligible for credit reporting, and each validated safeguard needs its own evidence entry.
 - Deviations are suggested automatically from the selected parameter and guideword.
-- A live summary of scenario counts, risk bands, and open actions.
-- An action tracker that rebuilds automatically from non-closed recommendations.
+- A live summary of scenario counts, risk bands, open actions, and mandatory actions when safeguards are not validated or residual risk is High/Critical.
+- An action tracker that rebuilds automatically from non-closed recommendations and mandatory action triggers.
 - CSV import, scored CSV export, and native .xlsx formatted Excel export with wrapped text plus fixed column widths and row heights for spreadsheet-friendly workflows.
 - Local browser storage so worksheet entries persist between sessions on the same device.
 
